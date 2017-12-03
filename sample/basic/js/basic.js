@@ -95,11 +95,45 @@ function showAttrs(attrs) {
 	if(attrs.length === 0)
 		return;
 
-	for (var i=0; i<10; i++){
+	var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth()+1;
+    var day = date.getDate();
+    var ymd = year+"/"+month+"/"+day;
+    document.getElementById('sub_title').innerHTML = "Written at "+ymd;
+
+    for (var i=0; i<10; i++){
 		if(i === 0){
 			document.getElementById('title').innerHTML = attrs + 'さんの<br>取扱説明書';
 		} else {
-
+			if(i === 1){
+                var wrapper = createContentsWrapper(attrs, i);
+                document.getElementById('page0').appendChild(wrapper);
+			}
 		}
 	}
+}
+
+function getTitle(i) {
+    switch (i){
+        case 1:
+        	return "病名";
+
+    }
+}
+
+function createContentsWrapper(attrs, i) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'contents_wrapper';
+    wrapper.style.display = 'none';
+    var title = document.createElement('p');
+    title.className = "contents_title";
+    title.innerHTML = getTitle(i);
+    wrapper.appendChild(title);
+
+    var subTitle = document.createElement('p');
+    subTitle.className = "contents";
+    subTitle.innerHTML = attrs[i];
+    wrapper.appendChild(subTitle);
+    return wrapper;
 }

@@ -9,9 +9,13 @@
 $input = file_get_contents('php://input');
 
 $inputs = explode('&', $input);
+$value = [];
 for ($i=0; $i<count($inputs); $i++) {
-    $value = mb_substr($inputs[$i], 2);
-} ?>
+    array_push($value, mb_substr($inputs[$i], 2));
+}
+$json = json_encode($value);
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,14 +84,10 @@ for ($i=0; $i<count($inputs); $i++) {
 
         });
 
-        // var atters = [];
-        // showAttrs(atters);
+        <?php echo "var atters = ".$json.";\n
+            showAttrs(atters);"
+        ?>
     }
-
-    window.addEventListener('resize', function (e) {
-        var size = resize(el);
-        $(el).turn('size', size.width, size.height);
-    });
 
     // Load the HTML4 version if there's not CSS transform
 
