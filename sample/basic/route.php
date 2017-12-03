@@ -6,18 +6,36 @@
  * Time: 0:43
  */
 
-$input = file_get_contents('php://input');
-
-$inputs = explode('&', $input);
-$value = [];
-for ($i=0; $i<count($inputs); $i++) {
-    $cutStr = mb_substr($inputs[$i], 2);
-    $cutStr = nl2br(urldecode($cutStr));
-    array_push($value, $cutStr);
-}
-
-$date = new DateTime();
-$dateFormatted =  $date->format('Y.m.d');
+//header('X-FRAME-OPTIONS:DENY');
+//mb_internal_encoding('UTF-8');
+//
+//$input = file_get_contents('php://input');
+//$input = htmlspecialchars($input, ENT_QUOTES,'UTF-8');
+//$input =str_replace( "\0", "", $input);
+//
+//$inputs = explode('&amp;', $input);
+//
+//
+//if(count($inputs) !== 6){
+//    kick404();
+//}
+//
+//$value = [];
+//for ($i=0; $i<count($inputs); $i++) {
+//    $cutStr = mb_substr($inputs[$i], 2);
+//    $cutStr = nl2br(urldecode($cutStr));
+//    array_push($value, $cutStr);
+//}
+//
+//$date = new DateTime();
+//$dateFormatted =  $date->format('Y.m.d');
+//
+//function kick404(){
+//    $redirectUrl = "error404";
+//    header("HTTP/1.0 404 Not Found");
+//    echo '404 Not Found';
+//    exit;
+//}
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +51,8 @@ $dateFormatted =  $date->format('Y.m.d');
     <meta name="keywords" content="キーワード,キーワード">
     <title>WorkSupport3</title>
     <meta name="viewport" content="width = 1050, user-scalable = no" />
-    <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
-    <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 </head>
+
 <body>
 
 <div>
@@ -49,9 +66,9 @@ $dateFormatted =  $date->format('Y.m.d');
     <div class="container">
         <div class="flipbook">
             <div class="hard" id="title_d">
-                <h1 id="title"><?php echo $value[0]; ?>さんの<br>
+                <h1 id="title">さんの<br>
                     取扱説明書</h1>
-                <p id="sub_title">Written at <?php echo $dateFormatted; ?></p>
+                <p id="sub_title"></p>
                 <!--<div id="icon_wrapper">-->
                 <img id="icon" src="pics/pencil.png"/>
                 <!--</div>-->
@@ -76,139 +93,170 @@ $dateFormatted =  $date->format('Y.m.d');
     </div>
 </div>
 
-
+<script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
+<script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
 <script type="text/javascript">
 
     function loadApp() {
 
-        var json = <?php echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?> ;
-        console.log(json);
+        var config = {
+            apiKey: "AIzaSyBQnxP9d4R40iogM5CP0_HVbULRxoD2_JM",
+            authDomain: "wordsupport3.firebaseapp.com",
+            databaseURL: "https://wordsupport3.firebaseio.com",
+            projectId: "wordsupport3",
+            storageBucket: "wordsupport3.appspot.com",
+            messagingSenderId: "60633268871"
+        };
+        firebase.initializeApp(config);
 
-        var flipBook = document.getElementsByClassName('flipbook')[0];
+        var key = getParameterByName('key');
+        if(!key){
+            console.log('error 116');
+            alert('処理に失敗しました');
+            return;
+        }
 
-        var i=1;
-
-        while (i < 10){
-            console.log(json[i]);
-
-            if(!json[i]){
-                i++;
-                console.log('きゃっちされました');
-                continue;
+        firebase.database().ref('books/' + key).once('value').then(function(snapshot) {
+            if(!snapshot.exists()){
+                alert('処理に失敗しました');
+                console.log('error 124');
+                return;
             }
 
-            //フレーム作成
-            var div = document.createElement('div');
-            div.style.backgroundImage = "url('pages/screen1.png')";
-            flipBook.appendChild(div);
-            var innerDiv = document.createElement('div');
-            div.appendChild(innerDiv);
+            document.getElementById('title').innerHTML = snapshot.child('name') + "さんの<br>取扱説明書</h1>";
+            document.getElementById('sub_title').innerHTML = 'Written at ' + snapshot.child('date');
 
-            //コンテンツ作成
-            var wrapper = makeContentsWrapper(getTitle(i), json[i]);
-            innerDiv.appendChild(wrapper);
+            var json = <?php echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?> ;
+            console.log(json);
 
-            if(wrapper.clientHeight < 600){
+            var flipBook = document.getElementsByClassName('flipbook')[0];
 
-                i++;
+            var i=1;
 
-                // while (i <json.length -1){
-                //
-                //     if(!json[i]){
-                //         i++;
-                //         console.log('きゃっちされました');
-                //         continue;
-                //     }
-                //
-                //     var nextWrapper = makeContentsWrapper(getTitle(i), json[i]);
-                //     innerDiv.appendChild(nextWrapper);
-                //     console.log(nextWrapper.parentElement.clientHeight);
-                //
-                //     var count = 0;
-                //     if(nextWrapper.parentElement.clientHeight >= 600) {
-                //         console.log('innerDiv.clientHeight >= 600' + json[i]);
-                //         nextWrapper.parentNode.removeChild(nextWrapper);
-                //         count++;
-                //         if(count > 100){
-                //             alert('処理に失敗しました');
-                //             return;
-                //         }
-                //         break;
-                //     }
-                //
-                //     i++;
-                // }
+            while (i < 10){
+                console.log(json[i]);
 
-            } else {
-                console.log('こっちやね');
-
-                //ひとコンテンツではみ出してしまう。よって、分割が必要だ。
-                var str = json[i];
-                var content = wrapper.getElementsByClassName('contents')[0];
-                while (wrapper.clientHeight + 100 > 600){
-                    str = str.slice(0, -5);
-                    content.innerHTML = str;
-                    console.log(wrapper.clientHeight);
+                if(!json[i]){
+                    i++;
+                    console.log('きゃっちされました');
+                    continue;
                 }
 
-                //残りの文字を配列に格納し直す
-                json[i] = json[i].slice(str.length+1);
-                str = json[i];
+                //フレーム作成
+                var div = document.createElement('div');
+                div.style.backgroundImage = "url('pages/screen1.png')";
+                flipBook.appendChild(div);
+                var innerDiv = document.createElement('div');
+                div.appendChild(innerDiv);
 
-                while (json[i].length !== 0){
-                    console.log('162'+str);
+                //コンテンツ作成
+                var wrapper = makeContentsWrapper(getTitle(i), json[i]);
+                innerDiv.appendChild(wrapper);
 
-                    //枠組みとなるdivを生成
-                    var divS = document.createElement('div');
-                    divS.style.backgroundImage = "url('pages/screen1.png')";
-                    // divS.className = 'contents_wrapper';
-                    var innerDivS = document.createElement('div');
-                    innerDivS.className = 'contents_wrapper';
-                    divS.appendChild(innerDivS);
+                if(wrapper.clientHeight < 600){
 
-                    //コンテンツを格納
-                    var strS = json[i];
-                    var contentExtra = document.createElement('p');
-                    contentExtra.className = 'contents';
-                    contentExtra.innerHTML = strS;
-                    innerDivS.appendChild(contentExtra);
+                    i++;
 
-                    //本体にappend
-                    flipBook.appendChild(divS);
+                    // while (i <json.length -1){
+                    //
+                    //     if(!json[i]){
+                    //         i++;
+                    //         console.log('きゃっちされました');
+                    //         continue;
+                    //     }
+                    //
+                    //     var nextWrapper = makeContentsWrapper(getTitle(i), json[i]);
+                    //     innerDiv.appendChild(nextWrapper);
+                    //     console.log(nextWrapper.parentElement.clientHeight);
+                    //
+                    //     var count = 0;
+                    //     if(nextWrapper.parentElement.clientHeight >= 600) {
+                    //         console.log('innerDiv.clientHeight >= 600' + json[i]);
+                    //         nextWrapper.parentNode.removeChild(nextWrapper);
+                    //         count++;
+                    //         if(count > 100){
+                    //             alert('処理に失敗しました');
+                    //             return;
+                    //         }
+                    //         break;
+                    //     }
+                    //
+                    //     i++;
+                    // }
 
-                    while (innerDivS.clientHeight +100 > 600){
+                } else {
+                    console.log('こっちやね');
+
+                    //ひとコンテンツではみ出してしまう。よって、分割が必要だ。
+                    var str = json[i];
+                    var content = wrapper.getElementsByClassName('contents')[0];
+                    while (wrapper.clientHeight + 100 > 600){
                         str = str.slice(0, -5);
                         content.innerHTML = str;
-                        console.log('うむ！'+ wrapper.clientHeight);
+                        console.log(wrapper.clientHeight);
                     }
 
-                    json[i] = json[i].slice(str.length);
+                    //残りの文字を配列に格納し直す
+                    json[i] = json[i].slice(str.length+1);
                     str = json[i];
+
+                    while (json[i].length !== 0){
+                        console.log('162'+str);
+
+                        //枠組みとなるdivを生成
+                        var divS = document.createElement('div');
+                        divS.style.backgroundImage = "url('pages/screen1.png')";
+                        // divS.className = 'contents_wrapper';
+                        var innerDivS = document.createElement('div');
+                        innerDivS.className = 'contents_wrapper';
+                        divS.appendChild(innerDivS);
+
+                        //コンテンツを格納
+                        var strS = json[i];
+                        var contentExtra = document.createElement('p');
+                        contentExtra.className = 'contents';
+                        contentExtra.innerHTML = strS;
+                        innerDivS.appendChild(contentExtra);
+
+                        //本体にappend
+                        flipBook.appendChild(divS);
+
+                        while (innerDivS.clientHeight +100 > 600){
+                            str = str.slice(0, -5);
+                            content.innerHTML = str;
+                            console.log('うむ！'+ wrapper.clientHeight);
+                        }
+
+                        json[i] = json[i].slice(str.length);
+                        str = json[i];
+                    }
+
+                    i++;
                 }
-
-                i++;
             }
-        }
 
-        //本は偶数ページ数でなければいけないから、その場合は1頁増やす
-        if(flipBook.childNodes.length %2 === 0){
-            flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(pages/screen1.png)\"></div>");
-            console.log('まさかの');
-        }
+            //本は偶数ページ数でなければいけないから、その場合は1頁増やす
+            if(flipBook.childNodes.length %2 === 0){
+                flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(pages/screen1.png)\"></div>");
+                console.log('まさかの');
+            }
 
-        flipBook.insertAdjacentHTML('beforeend', "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>" +
-            "\n" +
-            "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>");
+            flipBook.insertAdjacentHTML('beforeend', "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>" +
+                "\n" +
+                "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>");
 
 
-        // Create the flipbook
-        $('.flipbook').turn({
-            width:922,
-            height:600,
-            elevation: 50,
-            gradients: true,
-            autoCenter: true
+            // Create the flipbook
+            $('.flipbook').turn({
+                width:922,
+                height:600,
+                elevation: 50,
+                gradients: true,
+                autoCenter: true
 
+            });
         });
     }
 
@@ -283,6 +331,17 @@ $dateFormatted =  $date->format('Y.m.d');
     //         hedgeHoge(json, i, str, holder, pageCont);
     //     }
     // }
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        console.log(url);
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 </script>
 
 </body>

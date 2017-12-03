@@ -91,19 +91,6 @@ function isChrome() {
 
 }
 
-function showAttrs() {
-	// if(attrs.length ===
-	// 	return;
-    //
-    // for (var i=0; i<10; i++){
-     //    if(i === 1){
-     //        alert("うまし");
-     //        var wrapper = createContentsWrapper(attrs, i);
-     //        document.getElementById('page0').appendChild(wrapper);
-     //    }
-	// }
-}
-
 // function createContentsWrapper(attrs, i) {
 //     var wrapper = document.createElement('div');
 //     wrapper.className = 'contents_wrapper';
