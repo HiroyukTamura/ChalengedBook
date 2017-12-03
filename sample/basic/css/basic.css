@@ -118,6 +118,7 @@ p {
 
 h1 {
 	font-family: CheckPointFont;
+	word-wrap:break-word;
 	font-size: 48px;
 	margin: 50px 50px 20px 50px;
 	color: #FF6D3B;
@@ -126,16 +127,23 @@ h1 {
 .contents_title {
 	color: #FF6D3B;
 	font-size: 32px;
+	word-wrap:break-word;
 }
 
 .contents {
 	margin-top: 20px;
 	margin-bottom: 40px;
 	font-size: 24px;
+	word-wrap:break-word;
 }
 
 .contents_wrapper {
 	text-align: center;
 	font-family: CheckPointFont;
 	margin: 50px;
+}
+
+#holder {
+	display: none;
+	height: 600px;
 }
