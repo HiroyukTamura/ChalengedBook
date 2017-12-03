@@ -64,7 +64,7 @@ function getTitle($i){
                 <img id="icon" src="pics/pencil.png"/>
                 <!--</div>-->
             </div>
-            <div class="hard">Turn.js</div>
+            <div class="hard" style="background-color : #f2f2f2">Turn.js</div>
 <!--            <div id="page0" style="background-image:url(pages/screen1.png)">-->
 <!--                <div class="contents_wrapper" >-->
 <!--                    <p class="contents_title">--><?php //echo getTitle(1); ?><!--</p>-->
@@ -89,7 +89,7 @@ function getTitle($i){
 
     function loadApp() {
 
-        var json = <?php echo $json = json_encode($value); ?> ;
+        var json = <?php echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?> ;
         console.log(json);
 
         var flipBook = document.getElementsByClassName('flipbook')[0];
@@ -166,8 +166,8 @@ function getTitle($i){
                     console.log('162'+str);
 
                     //枠組みとなるdivを生成
-                    var divS = document.createComment('div');
-                    divS.style.backgroundImage = 'url(pages/screen1.png)';
+                    var divS = document.createElement('div');
+                    divS.style.backgroundImage = "url('pages/screen1.png')";
                     var innerDivS = document.createElement('div');
                     divS.appendChild(innerDivS);
 
@@ -193,17 +193,17 @@ function getTitle($i){
 
                 i++;
             }
-
-            //本は偶数ページ数でなければいけないから、その場合は1頁増やす
-            if(flipBook.childNodes.length %2 === 1){
-                flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(pages/screen1.png)\"></div>");
-                console.log('まさかの');
-            }
-
-            flipBook.insertAdjacentHTML('beforeend', "<div class=\"hard\" style=\"background-image:url(pages/11.jpg)\"></div>" +
-                "\n" +
-                "<div class=\"hard\" style=\"background-image:url(pages/12.jpg)\"></div>")
         }
+
+        //本は偶数ページ数でなければいけないから、その場合は1頁増やす
+        if(flipBook.childNodes.length %2 === 0){
+            flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(pages/screen1.png)\"></div>");
+            console.log('まさかの');
+        }
+
+        flipBook.insertAdjacentHTML('beforeend', "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>" +
+            "\n" +
+            "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>");
 
 
         // Create the flipbook
@@ -230,6 +230,17 @@ function getTitle($i){
         switch (i){
             case 1:
                 return '病名';
+            case 2:
+                return '病気の概要';
+            case 3:
+                return '症状の内容';
+            case 4:
+                return 'お願いしたい配慮';
+            case 5:
+                return '当事者について';
+            case 8:
+                return 'お願い';
+
             default:
                 return null;
         }
