@@ -66,8 +66,7 @@
     <div class="container">
         <div class="flipbook">
             <div class="hard" id="title_d">
-                <h1 id="title">さんの<br>
-                    取扱説明書</h1>
+                <h1 id="title"></h1>
                 <p id="sub_title"></p>
                 <!--<div id="icon_wrapper">-->
                 <img id="icon" src="pics/pencil.png"/>
@@ -125,17 +124,28 @@
                 return;
             }
 
-            document.getElementById('title').innerHTML = snapshot.child('name') + "さんの<br>取扱説明書</h1>";
-            document.getElementById('sub_title').innerHTML = 'Written at ' + snapshot.child('date');
+            document.getElementById('title').innerHTML = snapshot.child('name').val() + "さんの<br>トリセツ</h1>";
+            document.getElementById('sub_title').innerHTML = 'Written at ' + snapshot.child('date').val();
 
-            var json = <?php echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?> ;
+            //var json = <?php //echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>// ;
+            var json = [];
+            json[0] = snapshot.child('aboutDisease').val();
+            json[1] = snapshot.child('detailDisease').val();
+            json[2] = snapshot.child('consideration').val();
+            json[3] = snapshot.child('aboutMe').val();
+            json[4] = snapshot.child('msg').val();
+
             console.log(json);
 
             var flipBook = document.getElementsByClassName('flipbook')[0];
 
-            var i=1;
+            var i=0;
 
-            while (i < 10){
+            json.forEach(function (value) {
+               value = value.replace('\n', '<br>');
+            });
+
+            while (i < 5){
                 console.log(json[i]);
 
                 if(!json[i]){
