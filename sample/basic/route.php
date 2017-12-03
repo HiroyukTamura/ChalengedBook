@@ -18,14 +18,6 @@ for ($i=0; $i<count($inputs); $i++) {
 
 $date = new DateTime();
 $dateFormatted =  $date->format('Y.m.d');
-
-function getTitle($i){
-    switch ($i){
-        case 1:
-            return "病名";
-    }
-    return null;
-}
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +56,7 @@ function getTitle($i){
                 <img id="icon" src="pics/pencil.png"/>
                 <!--</div>-->
             </div>
-            <div class="hard" style="background-color : #f2f2f2">Turn.js</div>
+            <div class="hard" style="background-color : #f2f2f2"></div>
 <!--            <div id="page0" style="background-image:url(pages/screen1.png)">-->
 <!--                <div class="contents_wrapper" >-->
 <!--                    <p class="contents_title">--><?php //echo getTitle(1); ?><!--</p>-->
@@ -120,46 +112,47 @@ function getTitle($i){
 
                 i++;
 
-                while (i <json.length -1){
+                // while (i <json.length -1){
+                //
+                //     if(!json[i]){
+                //         i++;
+                //         console.log('きゃっちされました');
+                //         continue;
+                //     }
+                //
+                //     var nextWrapper = makeContentsWrapper(getTitle(i), json[i]);
+                //     innerDiv.appendChild(nextWrapper);
+                //     console.log(nextWrapper.parentElement.clientHeight);
+                //
+                //     var count = 0;
+                //     if(nextWrapper.parentElement.clientHeight >= 600) {
+                //         console.log('innerDiv.clientHeight >= 600' + json[i]);
+                //         nextWrapper.parentNode.removeChild(nextWrapper);
+                //         count++;
+                //         if(count > 100){
+                //             alert('処理に失敗しました');
+                //             return;
+                //         }
+                //         break;
+                //     }
+                //
+                //     i++;
+                // }
 
-                    if(!json[i]){
-                        i++;
-                        console.log('きゃっちされました');
-                        continue;
-                    }
-
-                    var nextWrapper = makeContentsWrapper(getTitle(i), json[i]);
-                    innerDiv.appendChild(nextWrapper);
-                    console.log(innerDiv.clientHeight);
-
-                    var count = 0;
-                    if(nextWrapper.parentElement.clientHeight >= 600) {
-                        console.log('innerDiv.clientHeight >= 600');
-                        nextWrapper.parentNode.removeChild(nextWrapper);
-                        count++;
-                        if(count > 100){
-                            console.log('エラー！！');
-                            return;
-                        }
-                        break;
-                    }
-
-                    i++;
-                }
             } else {
                 console.log('こっちやね');
 
                 //ひとコンテンツではみ出してしまう。よって、分割が必要だ。
                 var str = json[i];
                 var content = wrapper.getElementsByClassName('contents')[0];
-                while (wrapper.clientHeight > 600){
+                while (wrapper.clientHeight + 100 > 600){
                     str = str.slice(0, -5);
                     content.innerHTML = str;
                     console.log(wrapper.clientHeight);
                 }
 
                 //残りの文字を配列に格納し直す
-                json[i] = json[i].slice(str.length);
+                json[i] = json[i].slice(str.length+1);
                 str = json[i];
 
                 while (json[i].length !== 0){
@@ -168,7 +161,9 @@ function getTitle($i){
                     //枠組みとなるdivを生成
                     var divS = document.createElement('div');
                     divS.style.backgroundImage = "url('pages/screen1.png')";
+                    // divS.className = 'contents_wrapper';
                     var innerDivS = document.createElement('div');
+                    innerDivS.className = 'contents_wrapper';
                     divS.appendChild(innerDivS);
 
                     //コンテンツを格納
@@ -181,7 +176,7 @@ function getTitle($i){
                     //本体にappend
                     flipBook.appendChild(divS);
 
-                    while (contentExtra.clientHeight > 600){
+                    while (innerDivS.clientHeight +100 > 600){
                         str = str.slice(0, -5);
                         content.innerHTML = str;
                         console.log('うむ！'+ wrapper.clientHeight);
@@ -229,16 +224,14 @@ function getTitle($i){
     function getTitle(i) {
         switch (i){
             case 1:
-                return '病名';
-            case 2:
                 return '病気の概要';
-            case 3:
+            case 2:
                 return '症状の内容';
-            case 4:
+            case 3:
                 return 'お願いしたい配慮';
-            case 5:
+            case 4:
                 return '当事者について';
-            case 8:
+            case 5:
                 return 'お願い';
 
             default:
@@ -262,14 +255,6 @@ function getTitle($i){
         wrapper.appendChild(content);
 
         return wrapper;
-    }
-
-    function makeDiv() {
-        var div = document.createComment('div');
-        div.style.backgroundImage = 'url(pages/screen1.png)';
-        var innerDiv = document.createElement('div');
-        div.appendChild(innerDiv);
-        return div;
     }
 
     // function hedgeHoge(json, i, str, holder, pageCont) {
