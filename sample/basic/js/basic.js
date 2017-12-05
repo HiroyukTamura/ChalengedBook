@@ -94,18 +94,26 @@ function isChrome() {
 function onClickCopy() {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", 'https://api-ssl.bitly.com/v3/shorten?access_token=911ea773466eea97753436d412a2c830e7d6c76e&longUrl=' + window.location.href);
+    var cancelBtn = document.getElementsByClassName('remodal-cancel')[0];
+    var copyBtn = document.getElementById('remodal_copy');
+    var okBtn = document.getElementById('remodal_ok');
+
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4) {
             if(xhr.status==200) {
                 console.log("CORS works!", xhr.responseText);
-                var url = JSON.parse(xhr.responseText)['data']['url'];
+                document.getElementById('shorten_url').innerHTML = JSON.parse(xhr.responseText)['data']['url'];
+                cancelBtn.style.display = 'inline';
+                copyBtn.style.display = 'inline';
+                okBtn.style.display = 'none';
             } else {
-
+                document.getElementById('shorten_url').innerHTML = '処理に失敗しました';
+                cancelBtn.style.display = 'none';
+                copyBtn.style.display = 'none';
+                okBtn.style.display = 'inline';
             }
 
-            $('.test-popup').magnificPopup({
-                type:'inline'
-            });
+            $('[data-remodal-id=modal]').remodal().open();
         }
     };
 
@@ -203,6 +211,8 @@ function getParameterByName(name, url) {
 
 function init() {
     // var errDiv = document.getElementById('err_div');
+
+    var clipboard = new Clipboard('#remodal_copy');
 
     var key = getParameterByName('key');
     if (!key) {

@@ -13,7 +13,8 @@
 	<meta name="viewport" content="width = 1050, user-scalable = no" />
 	<link rel="stylesheet" type="text/css" href="css/basic.css" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/magnific-popup.css">
+	<link rel="stylesheet" type="text/css" href="css/remodal.css">
+	<link rel="stylesheet" type="text/css" href="css/remodal-default-theme.css">
 
 	<style type="text/css">
 
@@ -95,10 +96,6 @@
 	<!--</div>-->
 <!--</div>-->
 
-<div id="test-popup" class="white-popup mfp-hide">
-	Popup content
-</div>
-
 <div id="socials" style="margin: 20px;">
 	<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
 	<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
@@ -124,13 +121,23 @@
 	</div>
 </div>
 
+<div class="remodal" data-remodal-id="modal">
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<p id="shorten_url"></p>
+	<br>
+	<button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+	<button data-remodal-action="confirm" class="remodal-confirm" id="remodal_copy" data-clipboard-target="#shorten_url">Urlをコピー</button>
+	<button data-remodal-action="confirm" class="remodal-confirm" id="remodal_ok">OK</button>
+</div>
+
 <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="js/jquery.magnific-popup.js"></script>
+<script type="text/javascript" src="js/remodal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 <script type="text/javascript" src="js/basic.js"></script>
 <script type="text/javascript">
 
