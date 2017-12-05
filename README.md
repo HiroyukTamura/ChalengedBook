@@ -18,7 +18,7 @@
 [Turn.js 4th release license agreement](http://www.turnjs.com/docs/Turn.js_4th_release_license_agreement)
 
 #### 画像
-Icon made by [author link](https://www.flaticon.com/authors/maxim-basinski) from www.flaticon.com
+Icon made by [Maxim Basinski](https://www.flaticon.com/authors/maxim-basinski) from www.flaticon.com
 [CC 3.0 BY](https://creativecommons.org/licenses/by/3.0/)
 
 # ライセンス
