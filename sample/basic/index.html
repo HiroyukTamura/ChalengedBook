@@ -11,6 +11,45 @@
 	<meta name="keywords" content="キーワード,キーワード">
 	<title>WorkSupport3</title>
 	<meta name="viewport" content="width = 1050, user-scalable = no" />
+    <link rel="stylesheet" type="text/css" href="css/basic.css" />
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+	<style type="text/css">
+		.fa {
+			margin: 5px;
+			color: #FF6D3B;
+			cursor: pointer;
+			font-size: large;
+		}
+
+		.fa:hover {
+
+		}
+
+		.fa:before {
+			margin: 0 4px;
+			text-transform: none;
+			font-weight: normal;
+			font-style: normal;
+			font-variant: normal;
+			line-height: 1;
+			speak: none;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		.fa span {
+			display: none;
+			position: absolute;
+			font-size: 1em;
+			padding: 0.5em 0 0 0.25em;
+			font-weight: 700;
+		}
+
+		.fa:hover span {
+			display: block;
+			color: #6a7b7e;
+		}
+	</style>
 </head>
 
 <body>
@@ -25,7 +64,15 @@
 				<img id="icon" src="pics/pencil.png"/>
 				<!--</div>-->
 			</div>
-			<div class="hard" style="background-color : #f2f2f2"></div>
+			<div class="hard" style="background-color : #f2f2f2">
+                <div id="socials" style="margin: 20px 20px 20px auto; text-align:right;">
+					<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
+					<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
+                    <i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
+                    <i class="fa fa-facebook-official" onclick="onClickFb()"><span>facebook</span></i>
+                    <i class="fa fa-comment" aria-hidden="true" onclick="onClickLine()"><span>line</span></i>
+                </div>
+			</div>
 			<!--            <div style="background-image:url(pages/2.jpg)"></div>-->
 			<!--            <div style="background-image:url(pages/3.jpg)"></div>-->
 		</div>
@@ -221,15 +268,15 @@
 
     function getTitle(i) {
         switch (i){
-            case 1:
+            case 0:
                 return '病気の概要';
-            case 2:
+            case 1:
                 return '症状の内容';
-            case 3:
+            case 2:
                 return 'お願いしたい配慮';
-            case 4:
+            case 3:
                 return '当事者について';
-            case 5:
+            case 4:
                 return 'お願い';
 
             default:
@@ -264,6 +311,33 @@
         if (!results) return null;
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function setIconCss() {
+        var socials = document.getElementsByClassName('codrops-icon');
+        for (var n=0; n<socials.length; n++){
+            socials[n].stylesheet
+        }
+    }
+    
+    function onClickInfo() {
+		
+    }
+    
+    function onClickCopy() {
+		
+    }
+    
+    function onClickTwitter() {
+        window.location.href = "http://twitter.com/share?url=" + window.location.href;
+    }
+    
+    function onClickFb() {
+        window.location.href = "http://www.facebook.com/plugins/like.php?href=" + window.location.href;
+    }
+
+    function onClickLine() {
+        window.location.href = "http://line.me/R/msg/text/?" + window.location.href;
     }
 </script>
 
