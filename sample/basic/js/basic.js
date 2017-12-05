@@ -93,13 +93,14 @@ function isChrome() {
 
 function onClickCopy() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", 'https://api-ssl.bitly.com/v3/shorten?access_token=https://api-ssl.bitly.com/v3/shorten?access_token=911ea773466eea97753436d412a2c830e7d6c76e&longUrl=' + window.location.href);
+    xhr.open("GET", 'https://api-ssl.bitly.com/v3/shorten?access_token=911ea773466eea97753436d412a2c830e7d6c76e&longUrl=' + window.location.href);
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4) {
             if(xhr.status==200) {
                 console.log("CORS works!", xhr.responseText);
+                var url = JSON.parse(xhr.responseText)['data']['url'];
             } else {
-                console.log("Oops", xhr);
+                alert('処理に失敗しました');
             }
         }
     };
@@ -124,7 +125,21 @@ function onClickInfo() {
 }
 
 function onClickTwitter() {
-    window.location.href = "http://twitter.com/share?url=" + window.location.href;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'https://api-ssl.bitly.com/v3/shorten?access_token=911ea773466eea97753436d412a2c830e7d6c76e&longUrl=' + window.location.href);
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4) {
+            if(xhr.status==200) {
+                console.log("CORS works!", xhr.responseText);
+                var url = JSON.parse(xhr.responseText)['data']['url'];
+                window.location.href = "http://twitter.com/share?url=" + url;
+            } else {
+                alert('処理に失敗しました');
+            }
+        }
+    };
+
+    xhr.send();
 }
 
 function onClickFb() {
@@ -146,7 +161,7 @@ function getTitle(i) {
         case 3:
             return '当事者について';
         case 4:
-            return 'お願い';
+            return '';
 
         default:
             return null;
