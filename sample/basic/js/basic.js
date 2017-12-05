@@ -132,8 +132,19 @@ function onClickCopy() {
     // });
 }
 
-function onClickInfo() {
+function showErrModal() {
+    document.getElementById('shorten_url').innerHTML = '処理に失敗しました';
+    var cancelBtn = document.getElementsByClassName('remodal-cancel')[0];
+    var copyBtn = document.getElementById('remodal_copy');
+    var okBtn = document.getElementById('remodal_ok');
+    cancelBtn.style.display = 'none';
+    copyBtn.style.display = 'none';
+    okBtn.style.display = 'inline';
+    $('[data-remodal-id=modal]').remodal().open();
+}
 
+function onClickInfo() {
+    window.location.href('https://github.com/HiroyukTamura/ChalengedBook/blob/master/README.md');
 }
 
 function onClickTwitter() {
@@ -146,7 +157,7 @@ function onClickTwitter() {
                 var url = JSON.parse(xhr.responseText)['data']['url'];
                 window.location.href = "http://twitter.com/share?url=" + url;
             } else {
-                alert('処理に失敗しました');
+                showErrModal();
             }
         }
     };

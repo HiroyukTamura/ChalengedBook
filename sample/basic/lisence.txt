@@ -1,0 +1,8 @@
+font: チェックアウトポイント -- http://marusexijaxs.web.fc2.com/quizfont.html#quizfont2
+License: CC BY-ND -- http://creativecommons.org/licenses/by-nd/4.0/deed.ja
+
+lib: Turn.js -- http://www.turnjs.com/
+License: Turn.js 4th release license agreement -- http://www.turnjs.com/docs/Turn.js_4th_release_license_agreement
+
+Icon made by Maxim Basinski https://www.flaticon.com/authors/maxim-basinski from www.flaticon.com
+License: CC 3.0 BY -- https://creativecommons.org/licenses/by/3.0/
