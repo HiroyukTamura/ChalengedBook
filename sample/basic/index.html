@@ -53,19 +53,20 @@
 			color: #6a7b7e;
 		}
 
-		/*.img_w {*/
+		.img_w {
 			/*width: 100%;*/
 			/*height: 100%;*/
 			/*position: relative;*/
-		/*}*/
+		}
 
-		/*.center_img {*/
+		.center_img {
 			/*position: absolute;*/
 			/*top: 50%;*/
 			/*left: 50%;*/
 			/*-webkit-transform: translateX(-50%);*/
 			/*transform: translateX(-50%);*/
-		/*}*/
+			margin: auto;
+		}
 
 		/*#err_div {*/
 			/*width: 100%;*/
@@ -96,7 +97,7 @@
 	<!--</div>-->
 <!--</div>-->
 
-<div id="socials" style="margin: 20px;">
+<div id="socials" style="margin: 20px; visibility: hidden">
 	<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
 	<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
 	<i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
@@ -144,16 +145,6 @@
     function loadApp() {
         initFirebase();
         init();
-
-		// Create the flipbook
-		$('.flipbook').turn({
-			width:922,
-			height:600,
-			elevation: 50,
-			gradients: true,
-			autoCenter: true
-
-		});
     }
 
     // Load the HTML4 version if there's not CSS transform

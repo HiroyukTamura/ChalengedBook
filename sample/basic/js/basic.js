@@ -101,7 +101,6 @@ function onClickCopy() {
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4) {
             if(xhr.status==200) {
-                console.log("CORS works!", xhr.responseText);
                 document.getElementById('shorten_url').innerHTML = JSON.parse(xhr.responseText)['data']['url'];
                 cancelBtn.style.display = 'inline';
                 copyBtn.style.display = 'inline';
@@ -118,18 +117,6 @@ function onClickCopy() {
     };
 
     xhr.send();
-
-    // $.ajax({
-    //     url: 'https://api-ssl.bitly.com/v3/shorten?access_token=https://api-ssl.bitly.com/v3/shorten?access_token=ACCESS_TOKEN&longUrl=' + window.location.href,
-    //     type: 'POST',
-    //     contentType: 'application/json; charset=utf-8',
-    //     dataType: 'json',
-    //     success: function(response) {
-    //     	console.log(response);
-    //         var result = JSON.parse(response); // Evaluate the J-Son response object.
-		// 	alert(result);
-    //     }
-    // });
 }
 
 function showErrModal() {
@@ -223,14 +210,15 @@ function getParameterByName(name, url) {
 function init() {
     // var errDiv = document.getElementById('err_div');
 
+    var flipBook = document.getElementsByClassName('flipbook')[0];
+    // var loadingImg = document.getElementsByClassName('center_img')[0];
     var clipboard = new Clipboard('#remodal_copy');
 
     var key = getParameterByName('key');
     if (!key) {
-        // document.getElementById('placeholder').style.display = 'none';
-        // errDiv.style.display = 'inline';
         document.title = 'エラー';
-        alert('処理に失敗しました');
+        // loadingImg.style.display = 'none';
+        showErrModal();
         return;
     }
 
@@ -240,7 +228,8 @@ function init() {
             // errDiv.style.display = 'inline';
             console.log('error 124');
             document.title = 'エラー';
-            alert('処理に失敗しました');
+            // loadingImg.style.display = 'none';
+            showErrModal();
             return;
         }
 
@@ -258,8 +247,6 @@ function init() {
         json[4] = snapshot.child('msg').val();
 
         console.log(json);
-
-        var flipBook = document.getElementsByClassName('flipbook')[0];
 
         var i = 0;
 
@@ -371,7 +358,7 @@ function init() {
 
         //本は偶数ページ数でなければいけないから、その場合は1頁増やす
         if (flipBook.childNodes.length % 2 === 0) {
-            flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(pages/screen1.png)\"></div>");
+            flipBook.insertAdjacentHTML('beforeend', "<div style=\"background-image:url(../pages/screen1.png)\"></div>");
             console.log('まさかの');
         }
 
@@ -379,8 +366,19 @@ function init() {
             "\n" +
             "<div class=\"hard\" style=\"background-color : #f2f2f2\"></div>");
 
-        console.log('259');
-        // document.getElementById('placeholder').style.display = 'none';
+        // loadingImg.style.display = 'none';
+        document.getElementById('socials').style.visibility = 'visible';
+
+        // Create the flipbook
+        $('.flipbook').turn({
+            width:922,
+            height:600,
+            elevation: 50,
+            gradients: true,
+            autoCenter: true
+        });
+
+        flipBook.style.visibility = 'visible';
     });
 }
 
