@@ -13,6 +13,7 @@
 	<meta name="viewport" content="width = 1050, user-scalable = no" />
 	<link rel="stylesheet" type="text/css" href="css/basic.css" />
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/magnific-popup.css">
 
 	<style type="text/css">
 
@@ -94,7 +95,11 @@
 	<!--</div>-->
 <!--</div>-->
 
-<div id="socials" style="margin: 20px; display: none">
+<div id="test-popup" class="white-popup mfp-hide">
+	Popup content
+</div>
+
+<div id="socials" style="margin: 20px;">
 	<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
 	<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
 	<i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
@@ -102,7 +107,7 @@
 	<i class="fa fa-comment" aria-hidden="true" onclick="onClickLine()"><span>line</span></i>
 </div>
 
-<div class="flipbook-viewport" style="display: none;">
+<div class="flipbook-viewport">
 	<div class="container">
 		<div class="flipbook">
 			<div class="hard" id="title_d">
@@ -125,6 +130,7 @@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="js/jquery.magnific-popup.js"></script>
 <script type="text/javascript" src="js/basic.js"></script>
 <script type="text/javascript">
 

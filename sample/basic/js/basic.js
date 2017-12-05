@@ -100,8 +100,12 @@ function onClickCopy() {
                 console.log("CORS works!", xhr.responseText);
                 var url = JSON.parse(xhr.responseText)['data']['url'];
             } else {
-                alert('処理に失敗しました');
+
             }
+
+            $('.test-popup').magnificPopup({
+                type:'inline'
+            });
         }
     };
 
@@ -356,7 +360,6 @@ function init() {
 
         console.log('259');
         // document.getElementById('placeholder').style.display = 'none';
-        document.getElementsByClassName('flipbook-viewport')[0].style.display = 'inline';
     });
 }
 
@@ -371,19 +374,3 @@ function initFirebase() {
     };
     firebase.initializeApp(config);
 }
-
-// function createContentsWrapper(attrs, i) {
-//     var wrapper = document.createElement('div');
-//     wrapper.className = 'contents_wrapper';
-//     // wrapper.style.display = 'none';
-//     var title = document.createElement('p');
-//     title.className = "contents_title";
-//     title.innerHTML = getTitle(i);
-//     wrapper.appendChild(title);
-//
-//     var subTitle = document.createElement('p');
-//     subTitle.className = "contents";
-//     subTitle.innerHTML = attrs[i];
-//     wrapper.appendChild(subTitle);
-//     return wrapper;
-// }
