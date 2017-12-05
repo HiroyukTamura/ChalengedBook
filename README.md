@@ -24,7 +24,7 @@
 Icon made by [Maxim Basinski](https://www.flaticon.com/authors/maxim-basinski) from www.flaticon.com  
 [CC 3.0 BY](https://creativecommons.org/licenses/by/3.0/)
 
-# ライセンス
+## ライセンス
 ```
 Copyright 2017 Hiroyuki Tamura
 
