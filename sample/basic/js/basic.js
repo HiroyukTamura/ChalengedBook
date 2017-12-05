@@ -131,7 +131,7 @@ function showErrModal() {
 }
 
 function onClickInfo() {
-    window.location.href('https://github.com/HiroyukTamura/ChalengedBook/blob/master/README.md');
+    window.location.href = 'https://github.com/HiroyukTamura/ChalengedBook/blob/master/README.md';
 }
 
 function onClickTwitter() {
