@@ -91,6 +91,97 @@ function isChrome() {
 
 }
 
+function onClickCopy() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'https://api-ssl.bitly.com/v3/shorten?access_token=https://api-ssl.bitly.com/v3/shorten?access_token=911ea773466eea97753436d412a2c830e7d6c76e&longUrl=' + window.location.href);
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4) {
+            if(xhr.status==200) {
+                console.log("CORS works!", xhr.responseText);
+            } else {
+                console.log("Oops", xhr);
+            }
+        }
+    };
+
+    xhr.send();
+
+    // $.ajax({
+    //     url: 'https://api-ssl.bitly.com/v3/shorten?access_token=https://api-ssl.bitly.com/v3/shorten?access_token=ACCESS_TOKEN&longUrl=' + window.location.href,
+    //     type: 'POST',
+    //     contentType: 'application/json; charset=utf-8',
+    //     dataType: 'json',
+    //     success: function(response) {
+    //     	console.log(response);
+    //         var result = JSON.parse(response); // Evaluate the J-Son response object.
+		// 	alert(result);
+    //     }
+    // });
+}
+
+function onClickInfo() {
+
+}
+
+function onClickTwitter() {
+    window.location.href = "http://twitter.com/share?url=" + window.location.href;
+}
+
+function onClickFb() {
+    window.location.href = "http://www.facebook.com/plugins/like.php?href=" + window.location.href;
+}
+
+function onClickLine() {
+    window.location.href = "http://line.me/R/msg/text/?" + window.location.href;
+}
+
+function getTitle(i) {
+    switch (i){
+        case 0:
+            return '病気の概要';
+        case 1:
+            return '症状の内容';
+        case 2:
+            return 'お願いしたい配慮';
+        case 3:
+            return '当事者について';
+        case 4:
+            return 'お願い';
+
+        default:
+            return null;
+    }
+}
+
+function makeContentsWrapper(titleStr, contentStr) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'contents_wrapper';
+
+    var title = document.createElement('p');
+    title.className = 'contents_title';
+    title.innerHTML = titleStr;
+
+    var content = document.createElement('p');
+    content.className = 'contents';
+    content.innerHTML = contentStr;
+
+    wrapper.appendChild(title);
+    wrapper.appendChild(content);
+
+    return wrapper;
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    console.log(url);
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 // function createContentsWrapper(attrs, i) {
 //     var wrapper = document.createElement('div');
 //     wrapper.className = 'contents_wrapper';

@@ -6,36 +6,8 @@
  * Time: 0:43
  */
 
-//header('X-FRAME-OPTIONS:DENY');
-//mb_internal_encoding('UTF-8');
-//
-//$input = file_get_contents('php://input');
-//$input = htmlspecialchars($input, ENT_QUOTES,'UTF-8');
-//$input =str_replace( "\0", "", $input);
-//
-//$inputs = explode('&amp;', $input);
-//
-//
-//if(count($inputs) !== 6){
-//    kick404();
-//}
-//
-//$value = [];
-//for ($i=0; $i<count($inputs); $i++) {
-//    $cutStr = mb_substr($inputs[$i], 2);
-//    $cutStr = nl2br(urldecode($cutStr));
-//    array_push($value, $cutStr);
-//}
-//
-//$date = new DateTime();
-//$dateFormatted =  $date->format('Y.m.d');
-//
-//function kick404(){
-//    $redirectUrl = "error404";
-//    header("HTTP/1.0 404 Not Found");
-//    echo '404 Not Found';
-//    exit;
-//}
+header('Access-Control-Allow-Origin: "https://api-ssl.bitly.com/v3/shorten"');
+
 ?>
 
 <!DOCTYPE html>
@@ -51,15 +23,55 @@
     <meta name="keywords" content="キーワード,キーワード">
     <title>WorkSupport3</title>
     <meta name="viewport" content="width = 1050, user-scalable = no" />
+    <link rel="stylesheet" type="text/css" href="css/basic.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <style type="text/css">
+        .fa {
+            margin: 5px;
+            color: #FF6D3B;
+            cursor: pointer;
+            font-size: large;
+        }
+
+        .fa:hover {
+
+        }
+
+        .fa:before {
+            margin: 0 4px;
+            text-transform: none;
+            font-weight: normal;
+            font-style: normal;
+            font-variant: normal;
+            line-height: 1;
+            speak: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .fa span {
+            display: none;
+            position: absolute;
+            font-size: 1em;
+            padding: 0.5em 0 0 0.25em;
+            font-weight: 700;
+        }
+
+        .fa:hover span {
+            display: block;
+            color: #6a7b7e;
+        }
+    </style>
 </head>
 
 <body>
 
-<div>
-    <div id="holder" class="contents_wrapper" >
-<!--        <p class="contents_title"></p>-->
-<!--        <p class="contents"></p>-->
-    </div>
+<div id="socials" style="margin: 20px;">
+    <i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
+    <i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
+    <i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
+    <i class="fa fa-facebook-official" onclick="onClickFb()"><span>facebook</span></i>
+    <i class="fa fa-comment" aria-hidden="true" onclick="onClickLine()"><span>line</span></i>
 </div>
 
 <div class="flipbook-viewport">
@@ -73,21 +85,8 @@
                 <!--</div>-->
             </div>
             <div class="hard" style="background-color : #f2f2f2"></div>
-<!--            <div id="page0" style="background-image:url(pages/screen1.png)">-->
-<!--                <div class="contents_wrapper" >-->
-<!--                    <p class="contents_title">--><?php //echo getTitle(1); ?><!--</p>-->
-<!--                    <p class="contents">--><?php //echo $value[2]?><!--</p>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div style="background-image:url(pages/2.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/3.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/4.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/5.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/6.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/7.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/8.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/9.jpg)"></div>-->
-<!--            <div style="background-image:url(pages/10.jpg)"></div>-->
+            <!--            <div style="background-image:url(pages/2.jpg)"></div>-->
+            <!--            <div style="background-image:url(pages/3.jpg)"></div>-->
         </div>
     </div>
 </div>
@@ -96,6 +95,9 @@
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/basic.js"></script>
 <script type="text/javascript">
 
     function loadApp() {
@@ -142,7 +144,7 @@
             var i=0;
 
             json.forEach(function (value) {
-               value = value.replace('\n', '<br>');
+                value = value.replace('\n', '<br>');
             });
 
             while (i < 5){
@@ -278,80 +280,6 @@
         both: ['css/basic.css'],
         complete: loadApp
     });
-
-    function getTitle(i) {
-        switch (i){
-            case 1:
-                return '病気の概要';
-            case 2:
-                return '症状の内容';
-            case 3:
-                return 'お願いしたい配慮';
-            case 4:
-                return '当事者について';
-            case 5:
-                return 'お願い';
-
-            default:
-                return null;
-        }
-    }
-
-    function makeContentsWrapper(titleStr, contentStr) {
-        var wrapper = document.createElement('div');
-        wrapper.className = 'contents_wrapper';
-
-        var title = document.createElement('p');
-        title.className = 'contents_title';
-        title.innerHTML = titleStr;
-
-        var content = document.createElement('p');
-        content.className = 'contents';
-        content.innerHTML = contentStr;
-
-        wrapper.appendChild(title);
-        wrapper.appendChild(content);
-
-        return wrapper;
-    }
-
-    // function hedgeHoge(json, i, str, holder, pageCont) {
-    //     console.log('hogehoge');
-    //     str = json[i].slice(str.length);
-    //
-    //     holder.innerHTML = '';
-    //     var contentD = document.createElement('p');
-    //     contentD.className = 'contents';
-    //     contentD.innerHTML = str;
-    //
-    //     if(holder.clientHeight < 600){
-    //         console.log('ここ');
-    //         pageCont.push(holder);
-    //
-    //     } else {
-    //         console.log('こっち');
-    //         while (holder.clientHeight > 600){
-    //             str = str.slice(0, -5);
-    //             contentD.innerHTML = str;
-    //             console.log(holder.clientHeight);
-    //         }
-    //
-    //         pageCont.push(holder);
-    //
-    //         hedgeHoge(json, i, str, holder, pageCont);
-    //     }
-    // }
-
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        console.log(url);
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
 </script>
 
 </body>

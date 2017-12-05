@@ -1,3 +1,15 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hiroyuki2
+ * Date: 2017/12/03
+ * Time: 0:43
+ */
+
+header('Access-Control-Allow-Origin: "https://api-ssl.bitly.com/v3/shorten"');
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]-->
@@ -54,6 +66,14 @@
 
 <body>
 
+<div id="socials" style="margin: 20px;">
+	<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
+	<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
+	<i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
+	<i class="fa fa-facebook-official" onclick="onClickFb()"><span>facebook</span></i>
+	<i class="fa fa-comment" aria-hidden="true" onclick="onClickLine()"><span>line</span></i>
+</div>
+
 <div class="flipbook-viewport">
 	<div class="container">
 		<div class="flipbook">
@@ -64,15 +84,7 @@
 				<img id="icon" src="pics/pencil.png"/>
 				<!--</div>-->
 			</div>
-			<div class="hard" style="background-color : #f2f2f2">
-                <div id="socials" style="margin: 20px 20px 20px auto; text-align:right;">
-					<i class="fa fa-info-circle" aria-hidden="true" onclick="onClickInfo()"><span>info</span></i>
-					<i class="fa fa-clone" aria-hidden="true" onclick="onClickCopy()"><span>urlをコピー</span></i>
-                    <i class="fa fa-twitter" onclick="onClickTwitter()"><span>twitter</span></i>
-                    <i class="fa fa-facebook-official" onclick="onClickFb()"><span>facebook</span></i>
-                    <i class="fa fa-comment" aria-hidden="true" onclick="onClickLine()"><span>line</span></i>
-                </div>
-			</div>
+			<div class="hard" style="background-color : #f2f2f2"></div>
 			<!--            <div style="background-image:url(pages/2.jpg)"></div>-->
 			<!--            <div style="background-image:url(pages/3.jpg)"></div>-->
 		</div>
@@ -83,6 +95,9 @@
 <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase-database.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/basic.js"></script>
 <script type="text/javascript">
 
     function loadApp() {
@@ -265,80 +280,6 @@
         both: ['css/basic.css'],
         complete: loadApp
     });
-
-    function getTitle(i) {
-        switch (i){
-            case 0:
-                return '病気の概要';
-            case 1:
-                return '症状の内容';
-            case 2:
-                return 'お願いしたい配慮';
-            case 3:
-                return '当事者について';
-            case 4:
-                return 'お願い';
-
-            default:
-                return null;
-        }
-    }
-
-    function makeContentsWrapper(titleStr, contentStr) {
-        var wrapper = document.createElement('div');
-        wrapper.className = 'contents_wrapper';
-
-        var title = document.createElement('p');
-        title.className = 'contents_title';
-        title.innerHTML = titleStr;
-
-        var content = document.createElement('p');
-        content.className = 'contents';
-        content.innerHTML = contentStr;
-
-        wrapper.appendChild(title);
-        wrapper.appendChild(content);
-
-        return wrapper;
-    }
-
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        console.log(url);
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    function setIconCss() {
-        var socials = document.getElementsByClassName('codrops-icon');
-        for (var n=0; n<socials.length; n++){
-            socials[n].stylesheet
-        }
-    }
-    
-    function onClickInfo() {
-		
-    }
-    
-    function onClickCopy() {
-		
-    }
-    
-    function onClickTwitter() {
-        window.location.href = "http://twitter.com/share?url=" + window.location.href;
-    }
-    
-    function onClickFb() {
-        window.location.href = "http://www.facebook.com/plugins/like.php?href=" + window.location.href;
-    }
-
-    function onClickLine() {
-        window.location.href = "http://line.me/R/msg/text/?" + window.location.href;
-    }
 </script>
 
 </body>
