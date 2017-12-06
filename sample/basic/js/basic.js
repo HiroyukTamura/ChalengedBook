@@ -240,19 +240,19 @@ function init() {
 
         //var json = <?php //echo $json = json_encode($value, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>// ;
         var json = [];
-        json[0] = snapshot.child('aboutDisease').val();
-        json[1] = snapshot.child('detailDisease').val();
-        json[2] = snapshot.child('consideration').val();
-        json[3] = snapshot.child('aboutMe').val();
-        json[4] = snapshot.child('msg').val();
+        json[0] = snapshot.child('aboutDisease').val().replace(/\r?\n/g, "<br>");
+        json[1] = snapshot.child('detailDisease').val().replace(/\r?\n/g, "<br>");
+        json[2] = snapshot.child('consideration').val().replace(/\r?\n/g, "<br>");
+        json[3] = snapshot.child('aboutMe').val().replace(/\r?\n/g, "<br>");
+        json[4] = snapshot.child('msg').val().replace(/\r?\n/g, "<br>");
 
         console.log(json);
 
         var i = 0;
 
-        json.forEach(function (value) {
-            value = value.replace('\n', '<br>');
-        });
+        // json.forEach(function (value) {
+        //     value = value.replace('\n', '<br>');
+        // });
 
         while (i < 5) {
             console.log(json[i]);

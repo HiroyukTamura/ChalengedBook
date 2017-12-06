@@ -129,6 +129,7 @@ h1 {
 	color: #FF6D3B;
 	font-size: 32px;
 	word-wrap:break-word;
+	text-align: center;
 }
 
 .contents {
@@ -139,7 +140,7 @@ h1 {
 }
 
 .contents_wrapper {
-	text-align: center;
+	/*text-align: center;*/
 	font-family: CheckPointFont;
 	margin: 50px;
 }
